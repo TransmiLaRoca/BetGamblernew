@@ -1,0 +1,44 @@
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    const extension = path.extname(file.originalname);
+    cb(null, uniqueSuffix + extension);
+  }
+});
+
+const upload = multer({ storage: storage });
+
+// Configuración de Express para el manejo de datos del formulario
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
+
+// Ruta para la página de registro
+app.get('/registro', (req, res) => {
+  res.sendFile(path.join(__dirname, 'registro.html'));
+});
+
+// Ruta para procesar el formulario y guardar los datos
+app.post('/registro', upload.single('foto'), (req, res) => {
+  const nombre = req.body.nombre;
+  const correo = req.body.correo;
+  const contrasena = req.body.contrasena;
+  const foto = req.file;
+
+  // Aquí deberías escribir el código para guardar la información en tu base de datos
+  // y asegurarte de guardar la ruta de la foto de perfil junto con otros datos como
+  // nombre, correo y contraseña.
+  const insertFotoQuery = `
+    CALL Alta Imagen ( '1', '${imageData.nombre}', '${imageData.ubicacion}','${userData.apodo}', '${userData.dni}', '${userData.email}', ${userData.edad}, '${userData.nacimiento}')`;
+  res.redirect('/index.html');
+});
+
+
+
+// Esto es para tener una foto de perfil. Pero primero se necesita modificar la base de datos de la pagina web agregando lo siguiente: 
+// Foto_Perfil (idFoto, nombre, ubicacion, tamaño)
+// Un stored procedure que me permita hacerlo de manera sencialla. Llamado "AltaImagen"; otro llamado "Actualizacion imagen".
+
+
