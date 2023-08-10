@@ -92,6 +92,14 @@ span {
     color:rgb(245, 186, 49);
 }
 
+.hide{
+    display: none;
+}
+
+.show{
+    display: block;
+}
+
 p {
     font-size: 17px;
     color: #D2D2D2;
@@ -162,8 +170,10 @@ p {
 }
 
 .about-img img {
-    width: 500px;
+    width: 450px;
+    height: 420px;
     border-radius: 50%;
+    background-size: cover;
 }
 
 .about-txt {
